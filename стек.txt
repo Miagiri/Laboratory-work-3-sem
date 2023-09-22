@@ -1,0 +1,149 @@
+#include <iostream>;
+using namespace std;
+
+struct node
+{
+	int elem;
+	node* sled;
+};
+
+struct stek
+{
+	node* stk;
+	stek()
+	{
+		stk = nullptr;
+	}
+
+	//построение стека
+	void add(int n)
+	{
+		node* t = new node();
+		t->elem = n;
+		t->sled = stk;
+		stk = t;
+	}
+
+	//удаление элемента из стека
+	void del()
+	{
+		node* t = stk;
+		stk = stk->sled;
+		delete t;
+	}
+
+
+	//проверка на пустоту стека
+	int empty()
+	{
+		if (stk == nullptr) //стек пуст
+		{
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}
+	}
+
+	//печать стека
+	void print()
+	{
+		node* t = stk;
+		cout << "Стек: " << " ";
+		while (t != nullptr)
+		{
+			cout << t->elem << " ";
+			t = t->sled;
+		}
+		cout << endl;
+	}
+
+	//вывод последнего элемента
+	void print_el()
+	{
+		cout << stk->elem << endl;
+	}
+};
+
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int n, kol, deystvie = 0;
+	cout << "введите колличество элементов ";
+	cin >> kol;
+	stek stk;
+	cout << "введите элменты " << endl;;
+	for (int i = 0; i < kol; i++)
+	{
+		cin >> n;
+		stk.add(n);
+	}
+	/*for (int i = 0; i < kol - 1; i++)
+		lst.add(rand());*/
+	stk.print();
+	while (deystvie != 6) {
+		cout << "выберите действие" << endl
+			<< "1. добавление элемента" << endl
+			<< "2. удаление элемента" << endl
+			<< "3. проверка стека на пустоту" << endl
+			<< "4. вывести последний элемент стека" << endl
+			<< "5. вывести стек" << endl
+			<< "6. выход" << endl;
+		cin >> deystvie;
+		switch (deystvie)
+		{
+		case 1:
+			cout << "введите элемент ";
+			cin >> n;
+			stk.add(n);
+			break;
+		case 2:
+			if (stk.empty() == 0)
+			{
+				cout << "стек пуст" << endl;
+				break;
+			}
+			else
+			{
+				stk.del();
+				break;
+			}
+		case 3:
+			if (stk.empty() == 0)
+			{
+				cout << "стек пуст" << endl;
+				break;
+			}
+			else
+			{
+				cout << "стек не пуст" << endl;
+				break;
+			}
+		case 4:
+			if (stk.empty() == 0)
+			{
+				cout << "стек пуст" << endl;
+				break;
+			}
+			else
+			{
+				stk.print_el();
+				break;
+			}
+		case 5:
+			if (stk.empty() == 0)
+			{
+				cout << "стек пуст" << endl;
+				break;
+			}
+			else
+			{
+				stk.print();
+				break;
+			}
+		}
+	}
+	return 0;
+}

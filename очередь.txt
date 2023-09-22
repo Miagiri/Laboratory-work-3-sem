@@ -1,0 +1,149 @@
+#include <iostream>;
+using namespace std;
+
+struct node
+{
+	int elem;
+	node* sled;
+};
+
+struct queue
+{
+	node* no = NULL;
+	node* ko = NULL;
+
+	queue(int n)
+	{
+		node* r = new (node);
+		r->elem = n;
+		r->sled = NULL;
+		no = r; ko = r;
+
+	}
+
+	//добавление элемента 
+	void add(int n)
+	{
+		node* r = new (node);
+		r->elem = n;
+		r->sled = nullptr;
+		ko->sled = r;
+		ko = r;
+	}
+
+	//удаление элемента
+	void del()
+	{
+		int klad = no->elem; //запоминанем значение последнего элемента
+		node* q = no;
+		no = no->sled; //переводим указатель на следующий элемент
+		delete q; //удаляем не нужное звено
+	}
+
+	//вывод первого элемента
+	void print_el()
+	{
+		cout << no->elem << endl;
+	}
+
+	//вывод очереди
+	void print()
+	{
+		node* r;
+		cout << "Очередь: "; r = no;
+		while (r != nullptr)
+		{
+			cout << r->elem << " "; r = r->sled;
+		}
+		cout << endl;
+	}
+
+	int empty()
+	{
+		if (no == nullptr)
+			return 0;
+		else return 1;
+	}
+};
+
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	int n, kol, deystvie = 0;
+	cout << "введите колличество элементов ";
+	cin >> kol;
+	cout << "введите колличество элемент ";
+	cin >> n;
+	queue que(n);
+	for (int i = 0; i < kol-1; i++)
+	{
+		cin >> n;
+		que.add(n);
+	}
+	/*for (int i = 0; i < kol - 1; i++)
+		lst.add(rand());*/
+	que.print();
+	while (deystvie != 8) {
+		cout << "выберите действие" << endl
+			<< "1. добавление элемента" << endl
+			<< "2. удаление элемента" << endl
+			<< "3. проверка очереди на пустоту" << endl
+			<< "4. вывести первый элемент очереди" << endl
+			<< "5. вывести стек" << endl
+			<< "6. выход" << endl;
+		cin >> deystvie;
+		switch (deystvie)
+		{
+		case 1:
+			cout << "введите элемент ";
+			cin >> n;
+			que.add(n);
+			break;
+		case 2:
+			if (que.empty() == 0)
+			{
+				cout << "очередь пуста" << endl;
+				break;
+			}
+			else
+			{
+				que.del();
+				break;
+			}
+		case 3:
+			if (que.empty() == 0)
+			{
+				cout << "очередь пуста" << endl;
+				break;
+			}
+			else
+			{
+				cout << "очередь не пуста" << endl;
+				break;
+			}
+		case 4:
+			if (que.empty() == 0)
+			{
+				cout << "очередь пуста" << endl;
+				break;
+			}
+			else
+			{
+				que.print_el();
+				break;
+			}
+		case 5:
+			if (que.empty() == 0)
+			{
+				cout << "очередь пуста" << endl;
+				break;
+			}
+			else
+			{
+				que.print();
+				break;
+			}
+		}
+	}
+	return 0;
+}
