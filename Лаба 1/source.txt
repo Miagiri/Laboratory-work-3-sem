@@ -1,0 +1,96 @@
+#pragma once
+#include <iostream>
+#include <string>
+
+using namespace std;
+/* 
+Квадрат разбит на 4^k равновеликих квадратных клеток. Квадрат перегибается
+поочередно относительно вертикальной (правая половина подкладывается
+под левую) и горизонтальной (нижняя половина подкладывается под
+верхнюю) оси симметрии до тех пор, пока все клетки не будут расположены
+друг под другом. Требуется занумеровать клетки исходного квадрата таким
+образом, чтобы в результате выполнения операций перегиба номера клеток,
+расположенных друг под другом, образовали числовую последовательность
+1,2,3,...,4^k, начиная с верхней клетки.*/
+class stack
+{
+
+private:
+    struct Node {
+        string node_value;
+        Node* next;
+
+        Node(string value) :node_value(value), next(nullptr) {};
+    };
+
+    Node* head;
+
+public:
+
+    stack()
+    {
+        this->head = nullptr;
+    }
+
+    ~stack()
+    {
+        Node* current = this->head;
+        Node* after_current = nullptr;
+
+        while (current != nullptr)
+        {
+            Node* node_to_delete = current;
+            after_current = current->next;
+
+            delete node_to_delete;
+
+            current = after_current;
+        }
+
+
+    }
+
+    bool empty()
+    {
+        return this->head == nullptr;
+    }
+
+    void add(string value)
+    {
+        Node* new_node = new Node(value);
+
+        if (this->empty())
+        {
+            this->head = new_node;
+            return;
+        }
+
+        new_node->next = this->head;
+        this->head = new_node;
+
+    }
+
+    string del()
+    {
+        if (this->empty())
+        {
+            return "None";
+        }
+
+        string pop_element_value = this->head->node_value;
+
+        Node* node_to_delete = this->head;
+
+        this->head = node_to_delete->next;
+
+        delete node_to_delete;
+
+        return pop_element_value;
+
+    }
+
+
+
+
+
+};
